@@ -1,162 +1,111 @@
 # Ticksy — IT Helpdesk Ticketing System
 
-Aplikasi desktop helpdesk modern berbasis JavaFX untuk mengelola tiket dukungan IT, manajemen pengguna, dan pelaporan. Dibangun dengan arsitektur berlapis (MVC + Repository + Service), tema dark mode, dan kontrol akses berbasis peran (RBAC).
+A modern JavaFX desktop app for managing IT support tickets, users, and reports. Built with MVC + Repository + Service architecture, dark mode UI, and role-based access control.
 
 ---
 
-## Fitur
+## Features
 
-### Manajemen Tiket
-- Buat, lihat, edit, dan hapus tiket
-- Penomoran tiket otomatis format `TKT-00001`
-- Assign tiket ke agen
-- Pelacakan status dengan alur kerja: `OPEN → ASSIGNED → IN_PROGRESS → RESOLVED → CLOSED`
-- Level prioritas dengan kode warna (LOW, MEDIUM, HIGH, CRITICAL)
-- Klasifikasi berdasarkan kategori
-- Komentar penutupan beserta timestamp
+### Ticket Management
+- Create, view, edit, and delete tickets
+- Auto ticket numbering (`TKT-00001`)
+- Assign tickets to agents
+- Status workflow: `OPEN → ASSIGNED → IN_PROGRESS → RESOLVED → CLOSED`
+- Priority levels with color coding (LOW, MEDIUM, HIGH, CRITICAL)
+- Category classification and closing comments
 
-### Manajemen Pengguna
-- Autentikasi multi-peran (ADMIN, AGENT, USER)
-- CRUD pengguna lengkap
-- Penugasan departemen
-- Aktivasi / nonaktivasi akun
+### User Management
+- Multi-role authentication (ADMIN, AGENT, USER)
+- Full user CRUD with department assignment
+- Account activation / deactivation
 
-### Data Master *(khusus Admin)*
-- Kategori, Departemen, Prioritas, Peran, Status
-- CRUD penuh untuk setiap entitas master
+### Master Data *(Admin only)*
+- Full CRUD for Categories, Departments, Priorities, Roles, and Statuses
 
-### Laporan *(khusus Admin)*
-- **Ringkasan Tiket** — jumlah per status, prioritas, dan kategori
-- **Performa Agen** — metrik kinerja agen
-- **Waktu Resolusi** — analisis durasi penyelesaian tiket
-- **Tiket dari Waktu ke Waktu** — tren volume tiket
-- **Aktivitas Pengguna** — rekam jejak aktivitas pengguna
+### Reports *(Admin only)*
+- Ticket Summary, Agent Performance, Resolution Time, Tickets Over Time, User Activity
 
 ### UI/UX
-- Tema dark mode SaaS modern (Imperial Blue `#001D51` + Peach Yellow `#FFE3A5`)
-- Animasi transisi halus saat berpindah tampilan
-- Ikon Material Design (Ikonli)
-- Dukungan dark title bar Windows native
-- Menu dinamis berdasarkan peran pengguna
-- USER hanya melihat tiket miliknya sendiri; ADMIN/AGENT mendapat akses penuh
+- Dark mode SaaS theme (Imperial Blue `#001D51` + Peach Yellow `#FFE3A5`)
+- Smooth view transition animations, Material Design Icons
+- Windows native dark title bar
+- Dynamic menu and filtered views per role
 
 ---
 
-## Prasyarat
+## Prerequisites
 
-| Kebutuhan | Versi Minimum |
-|-----------|---------------|
-| Java (JDK) | 21 |
+| Requirement | Version |
+|-------------|---------|
+| Java (JDK) | 21+ |
 | Apache Maven | 3.8+ |
 | PostgreSQL | 13+ |
 
-> Pastikan `JAVA_HOME` sudah mengarah ke JDK 21 dan `mvn` tersedia di PATH.
-
 ---
 
-## Instalasi & Menjalankan Aplikasi
-
-### 1. Clone repositori
+## Installation
 
 ```bash
-git clone <url-repositori>
+# 1. Clone the repo
+git clone <repository-url>
 cd Tinksty
-```
 
-### 2. Buat database PostgreSQL
+# 2. Create the database
+psql -U postgres -c "CREATE DATABASE ticksy;"
 
-```sql
-CREATE DATABASE ticksy;
-```
-
-### 3. Jalankan schema database
-
-```bash
+# 3. Run the schema
 psql -U postgres -d ticksy -f schema.sql
 ```
 
-Script ini akan membuat semua tabel sekaligus mengisi data awal (roles, status, prioritas, kategori, departemen, dan akun admin default).
-
-### 4. Konfigurasi koneksi database
-
-Buka file [src/main/resources/META-INF/persistence.xml](src/main/resources/META-INF/persistence.xml) dan sesuaikan properti berikut:
+Update DB credentials in [src/main/resources/META-INF/persistence.xml](src/main/resources/META-INF/persistence.xml):
 
 ```xml
 <property name="jakarta.persistence.jdbc.url"      value="jdbc:postgresql://localhost:5432/ticksy"/>
 <property name="jakarta.persistence.jdbc.user"     value="postgres"/>
-<property name="jakarta.persistence.jdbc.password" value="123qweasd"/>
+<property name="jakarta.persistence.jdbc.password" value="your_password"/>
 ```
 
-### 5. Jalankan aplikasi
-
 ```bash
+# 4. Run
 mvn javafx:run
 ```
 
-### Login default
-
-| Username | Password | Peran |
-|----------|----------|-------|
-| `admin`  | `admin123` | ADMIN |
-
-> Segera ganti password admin setelah login pertama kali.
+**Default credentials:** `admin` / `admin123`
 
 ---
 
-## Struktur Proyek
+## Build (Portable)
 
+```bash
+mvn clean package
+mvn jpackage:jpackage
 ```
-Tinksty/
-├── pom.xml                        # Konfigurasi Maven
-├── schema.sql                     # Schema database + seed data
-└── src/main/
-    ├── java/com/ticksy/
-    │   ├── TicksyApplication.java # Entry point utama
-    │   ├── config/                # Konfigurasi Hibernate & seeder
-    │   ├── controller/            # Controller MVC (26 kelas)
-    │   │   ├── dashboard/
-    │   │   ├── master/
-    │   │   ├── transaction/
-    │   │   └── report/
-    │   ├── model/                 # JPA Entity (8 kelas)
-    │   ├── service/               # Business logic (7 kelas)
-    │   ├── repository/            # Data access layer (8 kelas)
-    │   └── util/                  # Helper: Session, Navigator, Alert
-    └── resources/
-        ├── fxml/                  # Tampilan UI (24 file FXML)
-        ├── css/styles.css         # Tema dark mode
-        └── META-INF/
-            └── persistence.xml   # Konfigurasi JPA
-```
+
+Output: `target/dist/Ticksy/Ticksy.exe`
 
 ---
 
 ## Tech Stack
 
-| Layer | Teknologi |
-|-------|-----------|
-| UI Framework | JavaFX 21.0.2 |
-| Tema UI | AtlantaFX 2.0.1 (CupertinoDark) |
-| Komponen Tambahan | ControlsFX 11.2.1 |
-| Ikon | Ikonli 12.3.1 (Material Design) |
-| ORM | Hibernate 6.4.4 + Jakarta JPA 3.1 |
-| Database | PostgreSQL |
-| Connection Pool | HikariCP (via Hibernate) |
-| Logging | SLF4J + Logback 1.4.14 |
-| Windows Native | JNA 5.14.0 |
-| Build Tool | Apache Maven |
+| Layer | Technology |
+|-------|------------|
+| UI | JavaFX 21 + AtlantaFX + ControlsFX + Ikonli |
+| ORM | Hibernate 6.4 + Jakarta JPA 3.1 |
+| Database | PostgreSQL + HikariCP |
+| Logging | SLF4J + Logback |
+| Build | Apache Maven |
 
 ---
 
-## Peran & Hak Akses
+## Roles & Permissions
 
-| Fitur | ADMIN | AGENT | USER |
-|-------|:-----:|:-----:|:----:|
+| Feature | ADMIN | AGENT | USER |
+|---------|:-----:|:-----:|:----:|
 | Dashboard | ✓ | ✓ | |
-| Semua tiket | ✓ | ✓ | |
-| Tiket sendiri | ✓ | ✓ | ✓ |
-| Buat tiket | ✓ | ✓ | ✓ |
-| Assign tiket | ✓ | ✓ | |
-| Data master | ✓ | | |
-| Manajemen user | ✓ | | |
-| Laporan | ✓ | | |
+| All tickets | ✓ | ✓ | |
+| Own tickets | ✓ | ✓ | ✓ |
+| Create ticket | ✓ | ✓ | ✓ |
+| Assign ticket | ✓ | ✓ | |
+| Master data | ✓ | | |
+| User management | ✓ | | |
+| Reports | ✓ | | |

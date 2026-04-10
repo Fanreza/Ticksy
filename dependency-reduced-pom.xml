@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.ticksy</groupId>
+  <artifactId>ticksy</artifactId>
+  <name>Ticksy</name>
+  <version>1.0.0</version>
+  <description>Modern IT Helpdesk Ticketing System</description>
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.12.1</version>
+        <configuration>
+          <source>${java.version}</source>
+          <target>${java.version}</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.openjfx</groupId>
+        <artifactId>javafx-maven-plugin</artifactId>
+        <version>0.0.8</version>
+        <configuration>
+          <mainClass>com.ticksy.TicksyApplication</mainClass>
+          <options>
+            <option>--add-opens</option>
+            <option>javafx.graphics/com.sun.javafx.stage=com.ticksy</option>
+            <option>--add-opens</option>
+            <option>javafx.graphics/com.sun.javafx.tk=com.ticksy</option>
+            <option>--add-opens</option>
+            <option>javafx.graphics/com.sun.glass.ui=com.ticksy</option>
+            <option>--add-opens</option>
+            <option>javafx.graphics/com.sun.glass.ui.win=com.ticksy</option>
+          </options>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.5.2</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <outputFile>${project.build.directory}/dist/Ticksy.jar</outputFile>
+              <transformers>
+                <transformer>
+                  <mainClass>com.ticksy.TicksyApplication</mainClass>
+                </transformer>
+                <transformer />
+              </transformers>
+              <filters>
+                <filter>
+                  <artifact>*:*</artifact>
+                  <excludes>
+                    <exclude>module-info.class</exclude>
+                    <exclude>META-INF/*.SF</exclude>
+                    <exclude>META-INF/*.DSA</exclude>
+                    <exclude>META-INF/*.RSA</exclude>
+                  </excludes>
+                </filter>
+              </filters>
+              <artifactSet>
+                <excludes>
+                  <exclude>org.openjfx:*</exclude>
+                </excludes>
+              </artifactSet>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>3.1.0</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <target>
+                <mkdir />
+                <copy>
+                  <fileset />
+                </copy>
+                <exec>
+                  <arg />
+                  <arg />
+                  <arg />
+                  <arg />
+                  <arg />
+                  <arg />
+                  <arg />
+                </exec>
+                <copy>
+                  <fileset />
+                </copy>
+                <echo>@echo off
+set APPDIR=%~dp0
+"%APPDIR%jre\bin\java.exe" --module-path "%APPDIR%lib" --add-modules javafx.controls,javafx.fxml,javafx.graphics,javafx.base --add-opens javafx.graphics/com.sun.javafx.stage=ALL-UNNAMED --add-opens javafx.graphics/com.sun.javafx.tk=ALL-UNNAMED --add-opens javafx.graphics/com.sun.glass.ui=ALL-UNNAMED --add-opens javafx.graphics/com.sun.glass.ui.win=ALL-UNNAMED -cp "%APPDIR%Ticksy.jar;%APPDIR%lib\*" com.ticksy.TicksyApplication
+pause</echo>
+                <zip />
+              </target>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+  <dependencies>
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-controls</artifactId>
+      <version>21.0.2</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-fxml</artifactId>
+      <version>21.0.2</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-graphics</artifactId>
+      <version>21.0.2</version>
+      <scope>compile</scope>
+    </dependency>
+  </dependencies>
+  <properties>
+    <hibernate.version>6.4.4.Final</hibernate.version>
+    <java.version>21</java.version>
+    <ikonli.version>12.3.1</ikonli.version>
+    <postgresql.version>42.7.2</postgresql.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <javafx.version>21.0.2</javafx.version>
+    <atlantafx.version>2.0.1</atlantafx.version>
+    <controlsfx.version>11.2.1</controlsfx.version>
+  </properties>
+</project>
