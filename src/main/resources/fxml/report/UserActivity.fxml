@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.ticksy.controller.report.UserActivityController"
+      spacing="16" styleClass="content-area">
+    <Label text="User Activity" styleClass="page-title"/>
+    <VBox styleClass="card" VBox.vgrow="ALWAYS">
+        <TableView fx:id="tableView" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="colUser" text="User" prefWidth="300"/>
+                <TableColumn fx:id="colTickets" text="Tickets Created" prefWidth="250"/>
+            </columns>
+        </TableView>
+    </VBox>
+</VBox>

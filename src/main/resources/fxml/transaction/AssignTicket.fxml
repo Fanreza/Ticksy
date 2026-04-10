@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.ticksy.controller.transaction.AssignTicketController"
+      spacing="16" styleClass="content-area">
+    <Label text="Assign Ticket" styleClass="page-title"/>
+
+    <VBox styleClass="card" spacing="16">
+        <Label text="Select an unassigned ticket and assign it to an agent." style="-fx-text-fill: #64748b;"/>
+
+        <HBox spacing="16">
+            <VBox spacing="4" HBox.hgrow="ALWAYS">
+                <Label text="Ticket" styleClass="form-label"/>
+                <ComboBox fx:id="ticketCombo" styleClass="form-field" maxWidth="Infinity" promptText="Select ticket"/>
+            </VBox>
+            <VBox spacing="4" HBox.hgrow="ALWAYS">
+                <Label text="Agent" styleClass="form-label"/>
+                <ComboBox fx:id="agentCombo" styleClass="form-field" maxWidth="Infinity" promptText="Select agent"/>
+            </VBox>
+        </HBox>
+
+        <HBox spacing="12" alignment="CENTER_RIGHT">
+            <Button text="Assign" onAction="#onAssign" styleClass="btn-primary"/>
+        </HBox>
+    </VBox>
+
+    <VBox styleClass="card" VBox.vgrow="ALWAYS">
+        <Label text="Assigned Tickets" styleClass="card-header"/>
+        <TableView fx:id="tableView" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="colTicketNo" text="Ticket #" prefWidth="120"/>
+                <TableColumn fx:id="colTitle" text="Title" prefWidth="250"/>
+                <TableColumn fx:id="colAgent" text="Assigned To" prefWidth="200"/>
+                <TableColumn fx:id="colStatus" text="Status" prefWidth="120"/>
+            </columns>
+        </TableView>
+    </VBox>
+</VBox>

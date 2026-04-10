@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.ticksy.controller.MainLayoutController"
+            prefWidth="1280" prefHeight="800">
+
+    <!-- Top Navbar -->
+    <top>
+        <HBox styleClass="navbar" alignment="CENTER_LEFT" spacing="10">
+
+            <!-- Logo + Brand -->
+            <ImageView fitWidth="28" fitHeight="28" preserveRatio="true" smooth="true">
+                <Image url="@../../images/logo.png"/>
+            </ImageView>
+            <Label text="Ticksy" styleClass="brand-label"/>
+
+            <MenuBar fx:id="menuBar" styleClass="menu-bar" HBox.hgrow="ALWAYS"/>
+
+            <!-- Right side: user info + logout -->
+            <HBox alignment="CENTER_RIGHT" spacing="12">
+                <Label fx:id="lblCurrentUser" text="" style="-fx-text-fill: #7a8599; -fx-font-size: 13px;"/>
+                <Button text="Logout" onAction="#onLogout" styleClass="btn-logout"/>
+            </HBox>
+        </HBox>
+    </top>
+
+    <!-- Content Area -->
+    <center>
+        <StackPane fx:id="contentArea" styleClass="content-area"/>
+    </center>
+
+</BorderPane>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.ticksy.controller.transaction.UserListController"
+      spacing="16" styleClass="content-area">
+    <Label text="Users" styleClass="page-title"/>
+    <HBox styleClass="toolbar-section" spacing="12" alignment="CENTER_LEFT">
+        <TextField fx:id="searchField" promptText="Search users..." styleClass="search-field"/>
+        <Button text="Search" onAction="#onSearch" styleClass="btn-secondary"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button text="+ Add" onAction="#onAdd" styleClass="btn-primary"/>
+        <Button text="Edit" onAction="#onEdit" styleClass="btn-secondary"/>
+        <Button text="Delete" onAction="#onDelete" styleClass="btn-danger"/>
+    </HBox>
+    <VBox styleClass="card" VBox.vgrow="ALWAYS">
+        <TableView fx:id="tableView" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="colId" text="ID" prefWidth="60"/>
+                <TableColumn fx:id="colUsername" text="Username" prefWidth="130"/>
+                <TableColumn fx:id="colFullName" text="Full Name" prefWidth="180"/>
+                <TableColumn fx:id="colEmail" text="Email" prefWidth="200"/>
+                <TableColumn fx:id="colRole" text="Role" prefWidth="100"/>
+                <TableColumn fx:id="colDepartment" text="Department" prefWidth="130"/>
+                <TableColumn fx:id="colActive" text="Active" prefWidth="80"/>
+            </columns>
+        </TableView>
+    </VBox>
+</VBox>

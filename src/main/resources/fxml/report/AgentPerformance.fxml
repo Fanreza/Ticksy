@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.ticksy.controller.report.AgentPerformanceController"
+      spacing="16" styleClass="content-area">
+    <Label text="Agent Performance" styleClass="page-title"/>
+    <VBox styleClass="card" VBox.vgrow="ALWAYS">
+        <TableView fx:id="tableView" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="colAgent" text="Agent" prefWidth="250"/>
+                <TableColumn fx:id="colStatus" text="Status" prefWidth="200"/>
+                <TableColumn fx:id="colCount" text="Tickets" prefWidth="150"/>
+            </columns>
+        </TableView>
+    </VBox>
+</VBox>

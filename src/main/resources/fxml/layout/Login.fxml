@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.Insets?>
+
+<StackPane xmlns="http://javafx.com/javafx/21"
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.ticksy.controller.LoginController"
+           styleClass="login-bg">
+
+    <VBox alignment="CENTER" spacing="0">
+
+        <!-- Login Card -->
+        <VBox fx:id="loginCard" styleClass="login-card" spacing="20" alignment="CENTER"
+              maxWidth="420" maxHeight="580" opacity="0">
+
+            <!-- Logo + Brand -->
+            <VBox alignment="CENTER" spacing="8">
+                <ImageView fitWidth="72" fitHeight="72" preserveRatio="true" smooth="true">
+                    <Image url="@../../images/logo.png"/>
+                </ImageView>
+                <Label text="Ticksy" styleClass="login-brand"/>
+                <Label text="IT Helpdesk Ticketing System" styleClass="login-subtitle"/>
+            </VBox>
+
+            <!-- Divider -->
+            <Separator styleClass="login-separator"/>
+
+            <!-- Form -->
+            <VBox spacing="18" maxWidth="320">
+
+                <VBox spacing="6">
+                    <Label text="Username" styleClass="login-label"/>
+                    <TextField fx:id="usernameField" styleClass="login-field"
+                               promptText="Enter your username"/>
+                </VBox>
+
+                <VBox spacing="6">
+                    <Label text="Password" styleClass="login-label"/>
+                    <PasswordField fx:id="passwordField" styleClass="login-field"
+                                   promptText="Enter your password"
+                                   onAction="#onLogin"/>
+                </VBox>
+
+                <!-- Error Message -->
+                <Label fx:id="errorLabel" text=""
+                       style="-fx-text-fill: #f87171; -fx-font-size: 13px; -fx-font-weight: 600;"
+                       wrapText="true"/>
+
+                <!-- Login Button -->
+                <Button text="Sign In" onAction="#onLogin" styleClass="login-btn"
+                        maxWidth="Infinity" prefHeight="44"/>
+
+            </VBox>
+
+            <!-- Footer -->
+            <Label text="Default admin: admin / admin123" styleClass="login-footer"/>
+
+        </VBox>
+
+    </VBox>
+
+</StackPane>

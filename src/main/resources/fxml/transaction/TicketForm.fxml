@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.ticksy.controller.transaction.TicketFormController"
+      spacing="16" styleClass="content-area" alignment="TOP_CENTER">
+    <Label fx:id="formTitle" text="New Ticket" styleClass="page-title"/>
+    <VBox styleClass="form-container" spacing="16" maxWidth="600">
+        <VBox spacing="4">
+            <Label text="Title" styleClass="form-label"/>
+            <TextField fx:id="titleField" styleClass="form-field" promptText="Enter ticket title"/>
+        </VBox>
+        <VBox spacing="4">
+            <Label text="Description" styleClass="form-label"/>
+            <TextArea fx:id="descriptionField" prefRowCount="4" promptText="Describe the issue"/>
+        </VBox>
+        <HBox spacing="16">
+            <VBox spacing="4" HBox.hgrow="ALWAYS">
+                <Label text="Category" styleClass="form-label"/>
+                <ComboBox fx:id="categoryCombo" styleClass="form-field" maxWidth="Infinity"/>
+            </VBox>
+            <VBox spacing="4" HBox.hgrow="ALWAYS">
+                <Label text="Priority" styleClass="form-label"/>
+                <ComboBox fx:id="priorityCombo" styleClass="form-field" maxWidth="Infinity"/>
+            </VBox>
+        </HBox>
+        <VBox spacing="4">
+            <Label text="Created By" styleClass="form-label"/>
+            <ComboBox fx:id="createdByCombo" styleClass="form-field" maxWidth="Infinity"/>
+        </VBox>
+        <HBox spacing="12" alignment="CENTER_RIGHT">
+            <padding><Insets top="12"/></padding>
+            <Button text="Cancel" onAction="#onCancel" styleClass="btn-secondary"/>
+            <Button text="Save" onAction="#onSave" styleClass="btn-primary"/>
+        </HBox>
+    </VBox>
+</VBox>

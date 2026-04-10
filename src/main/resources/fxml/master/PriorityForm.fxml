@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.ticksy.controller.master.PriorityFormController"
+      spacing="16" styleClass="content-area" alignment="TOP_CENTER">
+    <Label fx:id="formTitle" text="Add Priority" styleClass="page-title"/>
+    <VBox styleClass="form-container" spacing="16" maxWidth="500">
+        <VBox spacing="4">
+            <Label text="Name" styleClass="form-label"/>
+            <TextField fx:id="nameField" styleClass="form-field" promptText="Enter priority name"/>
+        </VBox>
+        <VBox spacing="4">
+            <Label text="Level" styleClass="form-label"/>
+            <Spinner fx:id="levelSpinner" styleClass="form-field"/>
+        </VBox>
+        <VBox spacing="4">
+            <Label text="Color (hex)" styleClass="form-label"/>
+            <TextField fx:id="colorField" styleClass="form-field" promptText="#ff0000"/>
+        </VBox>
+        <HBox spacing="12" alignment="CENTER_RIGHT">
+            <padding><Insets top="12"/></padding>
+            <Button text="Cancel" onAction="#onCancel" styleClass="btn-secondary"/>
+            <Button text="Save" onAction="#onSave" styleClass="btn-primary"/>
+        </HBox>
+    </VBox>
+</VBox>

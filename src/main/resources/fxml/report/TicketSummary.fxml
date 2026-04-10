@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.ticksy.controller.report.TicketSummaryController"
+      spacing="16" styleClass="content-area">
+    <Label text="Ticket Summary" styleClass="page-title"/>
+    <HBox spacing="20">
+        <VBox styleClass="card" HBox.hgrow="ALWAYS">
+            <Label text="By Status" styleClass="card-header"/>
+            <TableView fx:id="statusTable" prefHeight="300">
+                <columns>
+                    <TableColumn fx:id="colStatusName" text="Status" prefWidth="200"/>
+                    <TableColumn fx:id="colStatusCount" text="Count" prefWidth="120"/>
+                </columns>
+            </TableView>
+        </VBox>
+        <VBox styleClass="card" HBox.hgrow="ALWAYS">
+            <Label text="By Priority" styleClass="card-header"/>
+            <TableView fx:id="priorityTable" prefHeight="300">
+                <columns>
+                    <TableColumn fx:id="colPriorityName" text="Priority" prefWidth="200"/>
+                    <TableColumn fx:id="colPriorityCount" text="Count" prefWidth="120"/>
+                </columns>
+            </TableView>
+        </VBox>
+        <VBox styleClass="card" HBox.hgrow="ALWAYS">
+            <Label text="By Category" styleClass="card-header"/>
+            <TableView fx:id="categoryTable" prefHeight="300">
+                <columns>
+                    <TableColumn fx:id="colCategoryName" text="Category" prefWidth="200"/>
+                    <TableColumn fx:id="colCategoryCount" text="Count" prefWidth="120"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </HBox>
+</VBox>
