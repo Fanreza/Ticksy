@@ -12,6 +12,7 @@
         <Region HBox.hgrow="ALWAYS"/>
         <Button text="+ New Ticket" onAction="#onAdd" styleClass="btn-primary"/>
         <Button fx:id="btnEdit" text="Edit" onAction="#onEdit" styleClass="btn-secondary"/>
+        <Button fx:id="btnUpdateStatus" text="Update Status" onAction="#onUpdateStatus" styleClass="btn-secondary"/>
         <Button fx:id="btnClose" text="Close Ticket" onAction="#onClose" styleClass="btn-success"/>
         <Button fx:id="btnDelete" text="Delete" onAction="#onDelete" styleClass="btn-danger"/>
     </HBox>

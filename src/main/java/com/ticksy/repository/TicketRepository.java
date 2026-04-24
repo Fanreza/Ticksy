@@ -76,12 +76,16 @@ public class TicketRepository extends GenericRepository<Ticket> {
 
     public List<Object[]> getAverageResolutionTime() {
         return executeInTransaction(em ->
-                em.createQuery(
-                        "SELECT t.assignedTo.fullName, " +
-                                "AVG(EXTRACT(EPOCH FROM (t.closedAt - t.createdAt)) / 3600) " +
-                                "FROM Ticket t WHERE t.closedAt IS NOT NULL AND t.assignedTo IS NOT NULL " +
-                                "GROUP BY t.assignedTo.fullName",
-                        Object[].class).getResultList());
+                em.createNativeQuery(
+                        "SELECT u.full_name, " +
+                                "AVG(EXTRACT(EPOCH FROM (t.closed_at - t.created_at)) / 3600) " +
+                                "FROM tickets t JOIN users u ON t.assigned_to = u.id " +
+                                "WHERE t.closed_at IS NOT NULL AND t.assigned_to IS NOT NULL " +
+                                "GROUP BY u.full_name")
+                        .getResultList()
+                        .stream()
+                        .map(r -> (Object[]) r)
+                        .toList());
     }
 
     public List<Object[]> getTicketsCreatedOverTime() {

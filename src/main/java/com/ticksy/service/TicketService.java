@@ -52,6 +52,13 @@ public class TicketService {
         return ticketRepository.save(ticket);
     }
 
+    public Ticket updateStatus(Ticket ticket, String statusName) {
+        Status status = statusRepository.searchByName(statusName).stream().findFirst()
+                .orElseThrow(() -> new RuntimeException(statusName + " status not found"));
+        ticket.setStatus(status);
+        return ticketRepository.save(ticket);
+    }
+
     public Ticket closeTicket(Ticket ticket, String closingComment) {
         ticket.setClosingComment(closingComment);
         ticket.setClosedAt(LocalDateTime.now());

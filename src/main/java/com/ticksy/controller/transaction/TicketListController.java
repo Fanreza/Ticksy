@@ -15,6 +15,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import java.net.URL;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class TicketListController implements Initializable {
@@ -32,6 +33,7 @@ public class TicketListController implements Initializable {
     @FXML private TableColumn<Ticket, String> colCreatedAt;
 
     @FXML private Button btnEdit;
+    @FXML private Button btnUpdateStatus;
     @FXML private Button btnClose;
     @FXML private Button btnDelete;
 
@@ -65,18 +67,20 @@ public class TicketListController implements Initializable {
 
     private void applyRoleRestrictions() {
         if (SessionManager.isUser()) {
-            // USER: can only see own tickets, no close/delete, limited edit
             pageTitle.setText("My Tickets");
-            btnClose.setVisible(false);
-            btnClose.setManaged(false);
-            btnDelete.setVisible(false);
-            btnDelete.setManaged(false);
             btnEdit.setVisible(false);
             btnEdit.setManaged(false);
-        } else if (SessionManager.isAgent()) {
-            // AGENT: can see all, can close, no delete
+            btnUpdateStatus.setVisible(false);
+            btnUpdateStatus.setManaged(false);
             btnDelete.setVisible(false);
             btnDelete.setManaged(false);
+            // USER can close their own tickets
+        } else if (SessionManager.isAgent()) {
+            btnDelete.setVisible(false);
+            btnDelete.setManaged(false);
+            btnClose.setVisible(false);
+            btnClose.setManaged(false);
+            // AGENT can update status (IN_PROGRESS, RESOLVED) but not close
         }
         // ADMIN: everything visible
     }
@@ -128,6 +132,30 @@ public class TicketListController implements Initializable {
     }
 
     @FXML
+    private void onUpdateStatus() {
+        Ticket selected = tableView.getSelectionModel().getSelectedItem();
+        if (selected == null) {
+            AlertHelper.showError("No Selection", "Please select a ticket to update.");
+            return;
+        }
+        if ("CLOSED".equals(selected.getStatus().getName())) {
+            AlertHelper.showError("Invalid", "Cannot update status of a closed ticket.");
+            return;
+        }
+
+        ChoiceDialog<String> dialog = new ChoiceDialog<>("IN_PROGRESS", "IN_PROGRESS", "RESOLVED");
+        dialog.setTitle("Update Status");
+        dialog.setHeaderText("Update status for " + selected.getTicketNumber());
+        dialog.setContentText("New status:");
+        Optional<String> result = dialog.showAndWait();
+        result.ifPresent(status -> {
+            service.updateStatus(selected, status);
+            loadData();
+            AlertHelper.showInfo("Updated", "Ticket status updated to " + status + ".");
+        });
+    }
+
+    @FXML
     private void onClose() {
         Ticket selected = tableView.getSelectionModel().getSelectedItem();
         if (selected == null) {
@@ -137,6 +165,15 @@ public class TicketListController implements Initializable {
         if ("CLOSED".equals(selected.getStatus().getName())) {
             AlertHelper.showError("Already Closed", "This ticket is already closed.");
             return;
+        }
+
+        // USER can only close their own tickets
+        if (SessionManager.isUser()) {
+            Long userId = SessionManager.getCurrentUser().getId();
+            if (selected.getCreatedBy() == null || !selected.getCreatedBy().getId().equals(userId)) {
+                AlertHelper.showError("Unauthorized", "You can only close your own tickets.");
+                return;
+            }
         }
 
         TextInputDialog dialog = new TextInputDialog();
