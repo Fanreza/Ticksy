@@ -78,10 +78,20 @@ mvn javafx:run
 
 ```bash
 mvn clean package
-mvn jpackage:jpackage
 ```
 
-Output: `target/dist/Ticksy/Ticksy.exe`
+Output: `target/Ticksy-1.0.0.zip`
+
+Extract zip, double-click `Ticksy.exe` — no Java installation required.
+
+```
+Ticksy-1.0.0.zip
+├── jre/          bundled JRE
+├── lib/          JavaFX JARs + native DLLs
+├── Ticksy.exe    launcher (Launch4j)
+├── Ticksy.bat    fallback launcher
+└── Ticksy.jar    application JAR
+```
 
 ---
 
